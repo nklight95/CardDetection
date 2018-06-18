@@ -49,11 +49,25 @@ public class CustomOpenCVCameraVIew extends JavaCameraView {
         }
     }
 
-//    public void setFlash(boolean isOn) {
-//        if (mCamera != null) {
-//            mCamera.Parameters.setFlashMode(isOn ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
-//        }
-//    }
+    public void turnOffTheFlash() {
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFlashMode(params.FLASH_MODE_OFF);
+        mCamera.setParameters(params);
+    }
+
+    public void turnOnTheFlash() {
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFlashMode(params.FLASH_MODE_TORCH);
+        mCamera.setParameters(params);
+    }
+
+    public void setFlash(boolean isOn) {
+        if (isOn) {
+            turnOnTheFlash();
+        } else {
+            turnOffTheFlash();
+        }
+    }
 
     @Override
     protected Size calculateCameraFrameSize(List<?> supportedSizes, ListItemAccessor accessor, int surfaceWidth, int surfaceHeight) {

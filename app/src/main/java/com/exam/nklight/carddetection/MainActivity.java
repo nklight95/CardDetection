@@ -8,6 +8,7 @@ import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private ImageView panel;
     private Handler mHandler = null;
     private HandlerThread mHandlerThread = null;
+    private ImageView btnFlash;
+    boolean isFlashOn;
     private Mat captureMat;
     private Mat cropedMat;
     private Rect downedRect;
@@ -86,6 +89,18 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mOpenCvCameraView = findViewById(R.id.camera);
         panel = findViewById(R.id.panel);
+        btnFlash = findViewById(R.id.btn_flash);
+        btnFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFlashOn) {
+                    mOpenCvCameraView.setFlash(false);
+                } else {
+                    mOpenCvCameraView.setFlash(true);
+                }
+                isFlashOn = !isFlashOn;
+            }
+        });
         mOpenCvCameraView.setCvCameraViewListener(this);
         startHandlerThread();
 
